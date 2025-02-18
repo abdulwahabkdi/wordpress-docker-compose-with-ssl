@@ -55,3 +55,6 @@ systemctl enable docker && systemctl start docker
 
     Wait a few minutes for the containers to start and the SSL certificate to be generated. Then, visit `https://yourdomain.com` in your browser to complete the WordPress installation.
 
+
+More detailed version of this can be found here: https://medium.com/@abdulwahabkdi/deploy-wordpress-with-docker-ssl-no-headaches-e09a57a3c82e
+
