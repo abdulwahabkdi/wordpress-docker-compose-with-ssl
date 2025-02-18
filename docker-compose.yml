@@ -13,8 +13,8 @@ services:
       WORDPRESS_DB_NAME: "${DB_NAME}"
       WORDPRESS_DB_USER: "${DB_USER_NAME}"
       WORDPRESS_DB_PASSWORD: "${DB_USER_PASSWORD}"
-      VIRTUAL_HOST: yourdomain.com.in,www.yourdomain.com
-      LETSENCRYPT_HOST: yourdomain.com.in,www.yourdomain.com
+      VIRTUAL_HOST: yourdomain.com,www.yourdomain.com
+      LETSENCRYPT_HOST: yourdomain.com,www.yourdomain.com
     depends_on:
       - db
 
@@ -23,7 +23,7 @@ services:
     container_name: wordpressdb
     restart: unless-stopped
     volumes:
-      - ./wp-data:/docker-entrypoint-initdb.d
+      - ./wp-data:/docker-entrypoint-initdb.d # Can be used to initialize the MySQL service by placing a .sql file here
       - db_data:/var/lib/mysql  # Named volume for MySQL data
     environment:
       MYSQL_DATABASE: "${DB_NAME}"
