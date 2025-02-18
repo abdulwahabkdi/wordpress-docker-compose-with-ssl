@@ -10,7 +10,15 @@ This repository provides a simple and efficient way to set up WordPress with SSL
 
 **Installation:**
 
-1.  **Create Directory Structure:**
+1. **Install Docker and Docker compose**
+  ```bash
+   curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt update && sudo apt install docker-ce docker-ce-cli containerd.io docker-compose-plugin -y
+```
+2.  **Create Directory Structure:**
 
     ```bash
     mkdir -p /opt/wordpress
@@ -19,21 +27,21 @@ This repository provides a simple and efficient way to set up WordPress with SSL
     mkdir -p nginx/
     ```
 
-2.  **`docker-compose.yml`:**
+3.  **`docker-compose.yml`:**
 
     Create a `docker-compose.yml` file in the `/opt/wordpress` directory.  **Important:** Replace `yourdomain.com` and `www.yourdomain.com` with your actual domain(s) and update the email address.
     
-3.  ** The .env File **
+4.  ** The .env File **
 
     You can create a `.env` file in the same directory as `docker-compose.yml` to store environment variables.  This is a good practice for security and organization.
 
 
-4.  **Run Docker Compose:**
+5.  **Run Docker Compose:**
     ```bash
     docker compose up -d
     ```
 
-5.  **WordPress Installation:**
+6.  **WordPress Installation:**
 
     Wait a few minutes for the containers to start and the SSL certificate to be generated. Then, visit `https://yourdomain.com` in your browser to complete the WordPress installation.
 
