@@ -23,7 +23,7 @@ This repository provides a simple and efficient way to set up WordPress with SSL
 
     Create a `docker-compose.yml` file in the `/opt/wordpress` directory.  **Important:** Replace `yourdomain.com` and `www.yourdomain.com` with your actual domain(s) and update the email address.
     
-3.  **`.env` File **
+3.  ** The .env File **
 
     You can create a `.env` file in the same directory as `docker-compose.yml` to store environment variables.  This is a good practice for security and organization.
 
