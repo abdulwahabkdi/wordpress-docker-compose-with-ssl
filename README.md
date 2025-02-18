@@ -21,11 +21,12 @@ echo \
   sudo apt update && sudo apt install docker-ce docker-ce-cli containerd.io docker-compose-plugin -y
 ```
 
-RHEL 8/9
+RHEL/AlmaLinux 8/9
  ```bash
  sudo dnf -y install dnf-plugins-core
  sudo dnf config-manager --add-repo https://download.docker.com/linux/rhel/docker-ce.repo
  sudo dnf install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+systemctl enable docker && systemctl start docker
  ```
 2.  **Create Directory Structure:**
 
