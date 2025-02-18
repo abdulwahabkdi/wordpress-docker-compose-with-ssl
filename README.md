@@ -11,13 +11,22 @@ This repository provides a simple and efficient way to set up WordPress with SSL
 **Installation:**
 
 1. **Install Docker and Docker compose**
+
+   Ubuntu
   ```bash
    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 echo \
   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
   $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-sudo apt update && sudo apt install docker-ce docker-ce-cli containerd.io docker-compose-plugin -y
+  sudo apt update && sudo apt install docker-ce docker-ce-cli containerd.io docker-compose-plugin -y
 ```
+
+RHEL 8/9
+ ```bash
+ sudo dnf -y install dnf-plugins-core
+ sudo dnf config-manager --add-repo https://download.docker.com/linux/rhel/docker-ce.repo
+ sudo dnf install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+ ```
 2.  **Create Directory Structure:**
 
     ```bash
