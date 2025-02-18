@@ -1,0 +1,64 @@
+services:
+  wp:
+    image: wordpress:latest
+    container_name: wordpress-app
+    restart: unless-stopped
+    expose:
+      - 8080
+    volumes:
+      - ./config/php.conf.ini:/usr/local/etc/php/conf.d/conf.ini
+      - ./wp-app:/var/www/html  # Single mount for the entire WordPress document root
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_NAME: "${DB_NAME}"
+      WORDPRESS_DB_USER: "${DB_USER_NAME}"
+      WORDPRESS_DB_PASSWORD: "${DB_USER_PASSWORD}"
+      VIRTUAL_HOST: yourdomain.com.in,www.yourdomain.com
+      LETSENCRYPT_HOST: yourdomain.com.in,www.yourdomain.com
+    depends_on:
+      - db
+
+  db:
+    image: mysql:latest
+    container_name: wordpressdb
+    restart: unless-stopped
+    volumes:
+      - ./wp-data:/docker-entrypoint-initdb.d
+      - db_data:/var/lib/mysql  # Named volume for MySQL data
+    environment:
+      MYSQL_DATABASE: "${DB_NAME}"
+      MYSQL_ROOT_PASSWORD: "${DB_ROOT_PASSWORD}"
+      MYSQL_USER: "${DB_USER_NAME}"
+      MYSQL_PASSWORD: "${DB_USER_PASSWORD}"
+
+  nginx:
+    container_name: nginx
+    image: nginxproxy/nginx-proxy
+    restart: unless-stopped
+    ports:
+        - 80:80
+        - 443:443
+    volumes:
+        - /var/run/docker.sock:/tmp/docker.sock:ro
+        - ./nginx/html:/usr/share/nginx/html
+        - ./nginx/certs:/etc/nginx/certs
+        - ./nginx/vhost:/etc/nginx/vhost.d
+    logging:
+        options:
+            max-size: "10m"
+            max-file: "3"
+
+  acme-companion:
+    container_name: acme-companion
+    image: nginxproxy/acme-companion
+    restart: unless-stopped
+    volumes_from:
+        - nginx
+    volumes:
+        - /var/run/docker.sock:/var/run/docker.sock
+        - ./nginx/acme:/etc/acme.sh
+    environment:
+        DEFAULT_EMAIL: your_email@yourdomain.com
+
+volumes:
+  db_data:  # Explicitly define the named volume
